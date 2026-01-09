@@ -2,17 +2,14 @@
 """
 This module defines a Rectangle class with width, height,
 area, perimeter, string representations, deletion detection,
-instance counting, and customizable print symbol.
+instance counting, customizable print symbol, and comparison.
 """
 
 
 class Rectangle:
     """
     This class defines a rectangle by its width and height.
-
-    Attributes:
-        number_of_instances (int): The number of Rectangle instances.
-        print_symbol (any): Symbol used for string representation.
+   
     """
 
     number_of_instances = 0
@@ -20,8 +17,11 @@ class Rectangle:
 
     def __init__(self, width=0, height=0):
         """
-       Initialize a new Rectangle instance.
-       
+        Initialize a new Rectangle instance.
+
+        Args:
+            width (int): Width of the rectangle (default 0)
+            height (int): Height of the rectangle (default 0)
         """
         self.width = width
         self.height = height
@@ -66,31 +66,42 @@ class Rectangle:
         return 2 * (self.__width + self.__height)
 
     def __str__(self):
-        """
-        Return the rectangle using the print_symbol attribute.
-
-        If width or height is 0, returns an empty string.
-        """
+        """Return the rectangle using the print_symbol attribute."""
         if self.__width == 0 or self.__height == 0:
             return ""
-
-        # Determine symbol (instance-level first, then class-level)
         symbol = str(self.print_symbol)
-        # Build each row
         row = symbol * self.__width
-        # Combine all rows
         return "\n".join(row for _ in range(self.__height))
 
     def __repr__(self):
-        """
-        Return a string representation to recreate the rectangle via eval().
-        """
+        """Return a string representation to recreate the rectangle via eval()."""
         return "Rectangle({}, {})".format(self.__width, self.__height)
 
     def __del__(self):
-        """
-        Print a message when a Rectangle instance is deleted
-        and decrement the number_of_instances class attribute.
-        """
+        """Print a message when a Rectangle instance is deleted."""
         print("Bye rectangle...")
         Rectangle.number_of_instances -= 1
+
+    @staticmethod
+    def bigger_or_equal(rect_1, rect_2):
+        """
+        Return the rectangle with the bigger area.
+
+        Args:
+            rect_1 (Rectangle): First rectangle
+            rect_2 (Rectangle): Second rectangle
+
+        Returns:
+            Rectangle: The rectangle with the bigger area (rect_1 if equal)
+
+        Raises:
+            TypeError: If rect_1 or rect_2 is not a Rectangle
+        """
+        if not isinstance(rect_1, Rectangle):
+            raise TypeError("rect_1 must be an instance of Rectangle")
+        if not isinstance(rect_2, Rectangle):
+            raise TypeError("rect_2 must be an instance of Rectangle")
+
+        if rect_1.area() >= rect_2.area():
+            return rect_1
+        return rect_2
