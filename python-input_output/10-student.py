@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """
 Module that defines a Student class with selective JSON serialization
@@ -30,4 +29,3 @@ class Student:
 
         # Otherwise, return the full dictionary as before
         return self.__dict__
-
